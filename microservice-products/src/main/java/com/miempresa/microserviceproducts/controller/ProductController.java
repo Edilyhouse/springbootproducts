@@ -1,6 +1,7 @@
 package com.miempresa.microserviceproducts.controller;
 
 import com.miempresa.microserviceproducts.domain.Product;
+import com.miempresa.microserviceproducts.exceptions.ResourceNotFoundException;
 import com.miempresa.microserviceproducts.services.ProductService;
 import com.miempresa.microserviceproducts.services.ProductServiceImpl;
 import org.apache.coyote.Response;
@@ -35,9 +36,13 @@ public class ProductController {
     @GetMapping("/{id}")
     // *********  es mejor hacerlo con Stream  ********
 
-    public ResponseEntity<?> getProductById(@PathVariable int id) {
-        Product product = productService.getProductById(id);
-        return product != null ? ResponseEntity.ok(product) : ResponseEntity.notFound().build();
+    public ResponseEntity<?> getProductById(@PathVariable String id) {
+        int productId = Integer.parseInt(id);
+        Product product = productService.getProductById(productId);
+        if(product == null){
+            throw new ResourceNotFoundException("Producto con Id " + id + "No encontrado");
+        }
+        return ResponseEntity.ok(product);
     }
 
 
@@ -65,14 +70,20 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable  int id, @RequestBody Product updateProduct){
         Product updatedProduct = productService.updateProduct(id, updateProduct);
-        return updatedProduct != null ? ResponseEntity.ok(updatedProduct) : ResponseEntity.notFound().build();
+        if(updatedProduct == null){
+            throw new ResourceNotFoundException("Producto con ID " + id + "No encontrado");
+        }
+        return ResponseEntity.ok(updatedProduct);
     }
 
     // Actualizar Parcialemente
     @PatchMapping("/{id}")
     public ResponseEntity<Product>  partiallyUpdateProduct(@PathVariable int id, @RequestBody Product updateProduct) {
         Product updatedProduct = productService.partiallyUpdateProduct(id, updateProduct);
-        return updatedProduct != null ? ResponseEntity.ok(updatedProduct) : ResponseEntity.notFound().build();
+        if(updatedProduct == null){
+            throw new ResourceNotFoundException("Producto con ID " + id + "No encontrado");
+        }
+        return  ResponseEntity.ok(updatedProduct);
     }
 
     // borrar un producto
