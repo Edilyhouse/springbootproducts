@@ -6,21 +6,25 @@ import com.miempresa.microserviceproducts.domain.Product;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 // TODO probar el @primary ya que no funciono
+
+@Service("json")
+@Primary
+
 public class ProductServiceJSONImpl implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        try{
+        try {
             return new ObjectMapper().readValue(
                     this.getClass().getResourceAsStream("/products.json"),
-                    new TypeReference<List<Product>>() {
-                    }
+                    new TypeReference<List<Product>>() {}
             );
-        } catch (Exception e){
-            throw new RuntimeException("Error al Leer el archivo", e);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al leer el archivo JSON", e);
         }
     }
 

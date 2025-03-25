@@ -4,18 +4,14 @@ import com.miempresa.microserviceproducts.domain.Product;
 import com.miempresa.microserviceproducts.exceptions.ResourceNotFoundException;
 import com.miempresa.microserviceproducts.services.ProductService;
 import com.miempresa.microserviceproducts.services.ProductServiceImpl;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/productos")
