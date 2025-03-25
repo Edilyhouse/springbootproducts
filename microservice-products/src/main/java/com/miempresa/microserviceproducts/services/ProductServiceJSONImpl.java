@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.miempresa.microserviceproducts.domain.Product;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +12,14 @@ import java.util.List;
 
 @ConditionalOnProperty(name="service.products", havingValue = "json", matchIfMissing = false)
 @Service
+@Lazy
 // @Primary
 
 public class ProductServiceJSONImpl implements ProductService {
+    public ProductServiceJSONImpl() {
+        System.out.println("inicializando con lazy desde JSON");
+    }
+
 
     @Override
     public List<Product> getAllProducts() {
@@ -28,6 +33,8 @@ public class ProductServiceJSONImpl implements ProductService {
             throw new RuntimeException("Error al Leer el archivo", e);
         }
     }
+
+
 
     @Override
     public Product getProductById(int id) {

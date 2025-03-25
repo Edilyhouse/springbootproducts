@@ -2,6 +2,7 @@ package com.miempresa.microserviceproducts.services;
 
 import com.miempresa.microserviceproducts.domain.Product;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @ConditionalOnProperty(name="service.products", havingValue = "list", matchIfMissing = true)
 @Service
+@Lazy
 public class ProductServiceImpl implements ProductService {
 
     List<Product> products = new ArrayList<>(Arrays.asList(

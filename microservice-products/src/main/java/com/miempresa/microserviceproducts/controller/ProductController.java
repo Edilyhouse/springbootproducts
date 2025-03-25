@@ -3,20 +3,16 @@ package com.miempresa.microserviceproducts.controller;
 import com.miempresa.microserviceproducts.domain.Product;
 import com.miempresa.microserviceproducts.exceptions.ResourceNotFoundException;
 import com.miempresa.microserviceproducts.services.ProductService;
-import com.miempresa.microserviceproducts.services.ProductServiceImpl;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/productos")
@@ -42,14 +38,20 @@ public class ProductController {
         Y POR CONSTRUCTOR  Es la mejor practiva
     * */
 
-    @Autowired
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    // Inyeccion de dependencia
+    @Autowired
+    public ProductController(@Lazy ProductService productService) {
         this.productService = productService;
     }
 
+    /* si fueran varios servicios o inyecciones de dependencias
+    *   public ProductController(ServicioA servicioA, @Lazy ServicioB servicioB)
+    *
+    * */
     // Endpoint obtener todos los productos
+
     @GetMapping()
     public ResponseEntity<List<Product>>  getAllProducts(){
        List<Product> products = productService.getAllProducts();
@@ -68,8 +70,6 @@ public class ProductController {
         }
         return ResponseEntity.ok(product);
     }
-
-
     // otra forma
     /* public Product getProductById(int id){
         for(Product product: products){
