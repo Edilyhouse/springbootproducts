@@ -3,12 +3,17 @@ package com.miempresa.microserviceproducts.services;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.miempresa.microserviceproducts.domain.Product;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// TODO probar el @primary ya que no funciono
+
+@ConditionalOnProperty(name="service.products", havingValue = "json", matchIfMissing = false)
+@Service
+// @Primary
+
 public class ProductServiceJSONImpl implements ProductService {
 
     @Override
