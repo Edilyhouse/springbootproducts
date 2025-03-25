@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Monitor Gamer Dell XPS",
+    "price": 1500.59,
+    "stock": 250
+  },
+  {
+    "id": 2,
+    "name": "ogotech Gamner spx",
+    "price": 148.99,
+    "stock": 25
+  },
+  {
+    "id": 3,
+    "name": "Teclado Mecánico Corsair",
+    "price": 500.59,
+    "stock": 1250
+  },
+  {
+    "id": 4,
+    "name": "Silla Gamer - JSON",
+    "price": 2550.05,
+    "stock": 25
+  }
+]

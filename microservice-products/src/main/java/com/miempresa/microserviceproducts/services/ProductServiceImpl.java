@@ -1,11 +1,13 @@
 package com.miempresa.microserviceproducts.services;
 
 import com.miempresa.microserviceproducts.domain.Product;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Service
 public class ProductServiceImpl implements ProductService {
 
     List<Product> products = new ArrayList<>(Arrays.asList(

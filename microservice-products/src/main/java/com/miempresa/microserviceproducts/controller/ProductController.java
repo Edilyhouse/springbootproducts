@@ -5,6 +5,7 @@ import com.miempresa.microserviceproducts.exceptions.ResourceNotFoundException;
 import com.miempresa.microserviceproducts.services.ProductService;
 import com.miempresa.microserviceproducts.services.ProductServiceImpl;
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +21,33 @@ import java.util.Optional;
 @RequestMapping("/productos")
 public class ProductController {
 
-    // definir objeto para conectar la poho con los enpoints
-    // polimorfismo
+    //  Instancia de clase definir objeto para conectar la poho con los enpoints
+    //  Polimorfismo
+    //  ProductService productService = new ProductServiceImpl();
 
-    ProductService productService = new ProductServiceImpl();
+    /* Inyección de dependencias puede
+        *
+        * POR CAMPO  no es muy recomendada no se puede mockear
+        *      @Autowired
+               private ProductService productService;
+        POR METODO setter
+        *   siempre hay que tener una instancia
+        *   private ProductService productService;
+        *   @Autowired
+            public void setProductService(ProductService productService) {
+                this.productService = productService;
+            } La anotacion va sobre el metodo setter Autowired SOLAMENTE VA EN EL CAMPO EN EL QUE SE VA A INYECTAR
+        *
+        Y POR CONSTRUCTOR  Es la mejor practiva
+    * */
+
+
+    private final ProductService productService;
+
+    @Autowired
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     // Endpoint obtener todos los productos
     @GetMapping()
