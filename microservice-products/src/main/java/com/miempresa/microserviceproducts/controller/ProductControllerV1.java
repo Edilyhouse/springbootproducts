@@ -15,8 +15,8 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/productos")
-public class ProductController {
+@RequestMapping("/api/v1/productos")
+public class ProductControllerV1 {
 
     //  Instancia de clase definir objeto para conectar la poho con los enpoints
     //  Polimorfismo
@@ -42,7 +42,7 @@ public class ProductController {
 
     // Inyeccion de dependencia
     @Autowired
-    public ProductController(@Lazy ProductService productService) {
+    public ProductControllerV1(@Lazy ProductService productService) {
         this.productService = productService;
     }
 
@@ -86,7 +86,7 @@ public class ProductController {
           Product newProduct = productService.createProduct(product);
           // bajamos el que viene como parametro
           // path("/productos/{id}") construye el path o url
-          URI location = uriComponentsBuilder.path("/productos/{id}").buildAndExpand(newProduct.getId()).toUri();
+          URI location = uriComponentsBuilder.path("/api/v1/productos/{id}").buildAndExpand(newProduct.getId()).toUri();
           return ResponseEntity.created(location).body(newProduct);
     }
 
