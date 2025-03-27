@@ -3,6 +3,10 @@ package com.miempresa.microserviceproducts.controller;
 import com.miempresa.microserviceproducts.domain.Product;
 import com.miempresa.microserviceproducts.exceptions.ResourceNotFoundException;
 import com.miempresa.microserviceproducts.services.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -52,6 +56,16 @@ public class ProductControllerV1 {
     * */
     // Endpoint obtener todos los productos
 
+    @Operation(
+            summary = "Obtener todos los productos.",
+            description = "Retorna una lista con todos los productos en la base de datos"
+
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de productos obtenida correctamente"),
+            @ApiResponse(responseCode = "204", description = "No hay productos registrados"),
+            @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
+    })
     @GetMapping()
     public ResponseEntity<List<Product>>  getAllProducts(){
        List<Product> products = productService.getAllProducts();
@@ -80,9 +94,20 @@ public class ProductControllerV1 {
         return null;
     }*/
 
+    @Operation(
+            summary = "Crea un nuevo producto",
+            description = "Registra nuevo producto y retorna el producto junto con la URI de localización"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Producto creado exitosamente."),
+            @ApiResponse(responseCode = "404", description = "Solicitud mal formada"),
+            @ApiResponse(responseCode = "500", description = "Error interno del Servidor")
+    })
     // crear nuevo recurso
     @PostMapping()
-    public ResponseEntity<Product>  createProduct(@RequestBody Product product, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity<Product>  createProduct(
+            @Parameter(description = "Producto a crear", required = true)
+            @RequestBody Product product, UriComponentsBuilder uriComponentsBuilder){
           Product newProduct = productService.createProduct(product);
           // bajamos el que viene como parametro
           // path("/productos/{id}") construye el path o url
